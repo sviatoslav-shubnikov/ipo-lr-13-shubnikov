@@ -2,11 +2,9 @@ from PIL import Image, ImageFilter, ImageDraw, ImageFont
 
 class ImageProcessor:
     def __init__(self, image):
-        """Инициализация с изображением для обработки."""
         self.image = image
 
     def apply_filter(self, filter_type):
-        """Применение фильтра к изображению."""
         if self.image:
             filters = {
                 'BLUR': ImageFilter.BLUR,
@@ -25,16 +23,15 @@ class ImageProcessor:
             print("Нет изображения для обработки!")
 
     def add_watermark(self, text="Вариант 5"):
-        """Добавление водяного знака в правом нижнем углу изображения."""
         if self.image:
             draw = ImageDraw.Draw(self.image)
             font_size = max(20, min(self.image.size) // 20)
-            font = ImageFont.truetype("arial.ttf", font_size)
+            font = ImageFont.truetype("C:/Windows/Fonts/Arial.ttf", font_size)
 
-            text_width, text_height = draw.textsize(text, font)
+            text_width = draw.textlength(text, font=font)
+            text_height = font_size
             position = (self.image.size[0] - text_width - 10, self.image.size[1] - text_height - 10)
 
-            # Добавление полупрозрачного водяного знака
             watermark = Image.new("RGBA", self.image.size, (0, 0, 0, 0))
             watermark_draw = ImageDraw.Draw(watermark)
             watermark_draw.text(position, text, font=font, fill=(255, 255, 255, 128))
@@ -44,12 +41,10 @@ class ImageProcessor:
             print("Нет изображения для обработки!")
 
     def show_image(self):
-        """Отображение изображения."""
         if self.image:
             self.image.show()
         else:
             print("Нет изображения для отображения!")
 
     def get_image(self):
-        """Возврат обработанного изображения."""
         return self.image
