@@ -41,17 +41,16 @@ def menu():
                 image_for_processing = handler.get_image_for_processing()
                 if image_for_processing:
                     processor = ImageProcessor(image_for_processing)
-                    filter_type = input("Введите тип фильтра (BLUR, CONTOUR, DETAIL, SHARPEN, EDGE_ENHANCE, EMBOSS): ").strip().upper()
-                    processor.apply_filter(filter_type)
+                    processor.apply_filter()
             else:
                 print("Сначала загрузите изображение!")
 
         elif res == "5":
-            if processor and processor.image:
+            if handler and handler.image:
                 watermark_text = input("Введите текст водяного знака (по умолчанию 'Вариант 5'): ").strip() or "Вариант 5"
                 processor.add_watermark(watermark_text)
             else:
-                print("Сначала примените фильтр или загрузите изображение для обработки!")
+                print("Сначала загрузите изображение для обработки!")
 
         elif res == "6":
             if processor and processor.image:
@@ -62,12 +61,13 @@ def menu():
                 print("Сначала загрузите изображение или обработайте его!")
 
         elif res == "7":
-            if processor and processor.image:
+            if handler and handler.image:
                 save_path = input("Введите путь для сохранения обработанного изображения: ")
                 processor.get_image().save(save_path)
                 print(f"Изображение сохранено как: {save_path}")
             else:
-                print("Сначала обработайте изображение!")
+                print("Сначала загрузите изображение для cохранения!")
+            
 
         elif res == "8":
             print("Выход из программы.")
